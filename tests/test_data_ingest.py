@@ -8,13 +8,13 @@ class TestDataIngest(unittest.TestCase):
 
     Methods:
         test_fetch_weather_failure():
-            Tests the behavior of the fetch_weather function when provided with an invalid API key.
+            Tests the behavior of the fetch_weather function when provided with an invalid lat, long.
             Ensures that an exception is raised in such cases.
     """
     def test_fetch_weather_failure(self):
-        # Since an invalid API key should raise an exception
+        # Since an invalid latlong  should raise an exception
         with self.assertRaises(Exception):
-            fetch_weather("invalid_key", "0", "0")
+            fetch_weather("inf", "inf")
 
 if __name__ == "__main__":
     unittest.main()

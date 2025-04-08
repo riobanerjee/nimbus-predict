@@ -2,8 +2,28 @@
 import requests
 import json
 import sys
+import os
 
-def fetch_weather(api_key, lat, lon):
+def fetch_api_key():
+    """
+    Fetches the OpenWeatherMap API key from an environment variable.
+
+    This function retrieves the API key from the environment variable 'OPENWEATHER_API_KEY'.
+    If the environment variable is not set, it raises an exception.
+
+    Returns:
+        str: The OpenWeatherMap API key.
+
+    Raises:
+        Exception: If the API key is not found in the environment variables.
+    """
+    api_key = os.getenv("WEATHER_API_KEY")
+    if not api_key:
+        raise Exception("API key not found. Please set the OPENWEATHER_API_KEY environment variable.")
+    return api_key
+
+
+def fetch_weather(lat, lon):
     """
     Fetch weather data from the OpenWeatherMap API for a given location.
 
@@ -11,7 +31,6 @@ def fetch_weather(api_key, lat, lon):
     It excludes minutely, hourly, and alert data, and returns the response in metric units.
 
     Args:
-        api_key (str): Your API key for accessing the OpenWeatherMap API.
         lat (float): The latitude of the location for which to fetch weather data.
         lon (float): The longitude of the location for which to fetch weather data.
 
@@ -21,6 +40,10 @@ def fetch_weather(api_key, lat, lon):
     Raises:
         Exception: If the API request fails, an exception is raised with the HTTP status code.
     """
+    try:
+        api_key = fetch_api_key()
+    except Exception as e:
+        raise Exception(f"Error fetching API key: {e}")
     url = (
         f"https://api.openweathermap.org/data/2.5/onecall"
         f"?lat={lat}&lon={lon}&exclude=minutely,hourly,alerts&appid={api_key}&units=metric"
@@ -32,13 +55,12 @@ def fetch_weather(api_key, lat, lon):
         raise Exception(f"API request failed with status {response.status_code}")
 
 if __name__ == "__main__":
-    if len(sys.argv) != 4:
-        print("Usage: python data_ingest.py <API_KEY> <LAT> <LON>")
+    if len(sys.argv) != 3:
+        print("Usage: python data_ingest.py <LAT> <LON>")
         sys.exit(1)
-    api_key = sys.argv[1]
-    lat = sys.argv[2]
-    lon = sys.argv[3]
-    data = fetch_weather(api_key, lat, lon)
+    lat = sys.argv[1]
+    lon = sys.argv[2]
+    data = fetch_weather(lat, lon)
     with open("../data/raw_data.json", "w") as outfile:
         json.dump(data, outfile, indent=4)
     print("Raw data saved to ../data/raw_data.json")
