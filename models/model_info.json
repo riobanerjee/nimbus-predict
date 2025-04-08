@@ -1,0 +1,12 @@
+{
+    "model_name": "gradient_boosting",
+    "metrics": {
+        "rmse": 1.7495206085263302,
+        "mae": 1.2654959384262459,
+        "r2": 0.931055183516989
+    },
+    "best_params": {
+        "model__learning_rate": 0.1,
+        "model__n_estimators": 50
+    }
+}
