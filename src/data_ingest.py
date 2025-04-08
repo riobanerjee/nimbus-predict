@@ -17,7 +17,7 @@ def fetch_api_key():
     Raises:
         Exception: If the API key is not found in the environment variables.
     """
-    api_key = os.getenv("OPENWEATHER_API_KEY")
+    api_key = os.getenv("WEATHER_API_KEY")
     if not api_key:
         raise Exception("API key not found. Please set the OPENWEATHER_API_KEY environment variable.")
     return api_key
