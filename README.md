@@ -83,7 +83,6 @@ python -m src.models.train
 streamlit run app.py
 ```
 
-The application will be accessible at http://localhost:8501
 
 ## Project Structure
 
@@ -98,7 +97,8 @@ The application will be accessible at http://localhost:8501
 
 ## Deployment to GCP
 
-This project is set up for automatic deployment to Google Cloud Platform App Engine using GitHub Actions.
+TODO:
+This project will be set up for automatic deployment to Google Cloud Platform App Engine using GitHub Actions.
 
 1. **Set up Google Cloud SDK locally**
 
