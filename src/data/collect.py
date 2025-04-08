@@ -14,7 +14,7 @@ class WeatherDataCollector:
     def __init__(self):
         self.api_key = os.getenv("WEATHER_API_KEY")
         if not self.api_key:
-            raise ValueError("API key not found. Set OPENWEATHER_API_KEY in .env file")
+            raise ValueError("API key not found. Set WEATHER_API_KEY in .env file")
         self.base_url = "https://api.openweathermap.org/data/2.5/"
         self.history_url = "https://history.openweathermap.org/data/2.5/"
         

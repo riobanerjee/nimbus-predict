@@ -17,7 +17,7 @@ class TestWeatherPredictor:
     @patch('src.models.predict.os.path.exists')
     def test_init(self, mock_exists, mock_load):
         # Mock file existence
-        mock_exists.return_value = True
+        mock_exists.side_effect = [True, True]  # Mock the two calls
         
         # Mock model
         mock_model = MagicMock()
@@ -28,7 +28,9 @@ class TestWeatherPredictor:
         
         # Check initialization
         assert predictor.model == mock_model
-        mock_exists.assert_called_once_with("models/weather_prediction_model.joblib")
+        mock_exists.assert_any_call("models/weather_prediction_model.joblib")
+        mock_exists.assert_any_call("models/model_info.json")
+        assert mock_exists.call_count == 2
         mock_load.assert_called_once_with("models/weather_prediction_model.joblib")
     
     @patch('src.models.predict.joblib.load')
