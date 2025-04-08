@@ -19,7 +19,7 @@ def fetch_api_key():
     """
     api_key = os.getenv("WEATHER_API_KEY")
     if not api_key:
-        raise Exception("API key not found. Please set the OPENWEATHER_API_KEY environment variable.")
+        raise Exception("API key not found. Please set the WEATHER_API_KEY environment variable.")
     return api_key
 
 
@@ -44,11 +44,10 @@ def fetch_weather(lat, lon):
         api_key = fetch_api_key()
     except Exception as e:
         raise Exception(f"Error fetching API key: {e}")
-    url = (
-        f"https://api.openweathermap.org/data/2.5/onecall"
-        f"?lat={lat}&lon={lon}&exclude=minutely,hourly,alerts&appid={api_key}&units=metric"
-    )
+    url = f"https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={api_key}"
+    
     response = requests.get(url)
+
     if response.status_code == 200:
         return response.json()
     else:
