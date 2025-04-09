@@ -1,0 +1,142 @@
+[
+    {
+        "message": "Count: 1",
+        "cod": "200",
+        "city_id": 1,
+        "calctime": 0.008322686,
+        "cnt": 1,
+        "list": [
+            {
+                "dt": 1744124400,
+                "main": {
+                    "temp": 28.97,
+                    "feels_like": 32.66,
+                    "pressure": 1013,
+                    "humidity": 70,
+                    "temp_min": 28.97,
+                    "temp_max": 28.97
+                },
+                "wind": {
+                    "speed": 7.2,
+                    "deg": 180
+                },
+                "clouds": {
+                    "all": 20
+                },
+                "weather": [
+                    {
+                        "id": 721,
+                        "main": "Haze",
+                        "description": "haze",
+                        "icon": "50n"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "message": "Count: 1",
+        "cod": "200",
+        "city_id": 1,
+        "calctime": 0.00906461,
+        "cnt": 1,
+        "list": [
+            {
+                "dt": 1744038000,
+                "main": {
+                    "temp": 28.97,
+                    "feels_like": 33.42,
+                    "pressure": 1011,
+                    "humidity": 74,
+                    "temp_min": 28.97,
+                    "temp_max": 28.97
+                },
+                "wind": {
+                    "speed": 4.63,
+                    "deg": 170
+                },
+                "clouds": {
+                    "all": 0
+                },
+                "weather": [
+                    {
+                        "id": 721,
+                        "main": "Haze",
+                        "description": "haze",
+                        "icon": "50n"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "message": "Count: 1",
+        "cod": "200",
+        "city_id": 1,
+        "calctime": 0.008540074,
+        "cnt": 1,
+        "list": [
+            {
+                "dt": 1743951600,
+                "main": {
+                    "temp": 28.97,
+                    "feels_like": 35.55,
+                    "pressure": 1008,
+                    "humidity": 84,
+                    "temp_min": 28.97,
+                    "temp_max": 28.97
+                },
+                "wind": {
+                    "speed": 6.17,
+                    "deg": 160
+                },
+                "clouds": {
+                    "all": 20
+                },
+                "weather": [
+                    {
+                        "id": 721,
+                        "main": "Haze",
+                        "description": "haze",
+                        "icon": "50n"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "message": "Count: 1",
+        "cod": "200",
+        "city_id": 1,
+        "calctime": 0.008683624,
+        "cnt": 1,
+        "list": [
+            {
+                "dt": 1743865200,
+                "main": {
+                    "temp": 30.97,
+                    "feels_like": 34.3,
+                    "pressure": 1007,
+                    "humidity": 58,
+                    "temp_min": 30.97,
+                    "temp_max": 30.97
+                },
+                "wind": {
+                    "speed": 6.17,
+                    "deg": 180
+                },
+                "clouds": {
+                    "all": 0
+                },
+                "weather": [
+                    {
+                        "id": 721,
+                        "main": "Haze",
+                        "description": "haze",
+                        "icon": "50n"
+                    }
+                ]
+            }
+        ]
+    }
+]

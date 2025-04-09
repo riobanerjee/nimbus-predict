@@ -42,7 +42,7 @@ class WeatherDataCollector:
         data_points = []
         current_time = datetime.now()
         
-        for i in range(days_back):
+        for i in range(1, days_back): # Exclude today
             # Calculate timestamp for each day we want to get data for
             day_offset = timedelta(days=i)
             target_date = current_time - day_offset

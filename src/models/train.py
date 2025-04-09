@@ -50,6 +50,10 @@ class WeatherModelTrainer:
         df['next_day_temp'] = df.groupby('city')['temp'].shift(-1)
         df = df.dropna()  # Drop rows without next day temp
         
+        # Split data into training (current and historical) and testing (forecast)
+        train_df = df[(df['data_type'] == 'current') | (df['data_type'] == 'historical')]
+        test_df = df[df['data_type'] == 'forecast']
+        
         # Define features
         feature_cols = [
             'temp', 'feels_like', 'humidity', 'pressure', 
@@ -63,13 +67,10 @@ class WeatherModelTrainer:
         target_col = 'next_day_temp'
         
         # Split features and target
-        X = df[feature_cols + cat_cols]
-        y = df[target_col]
-        
-        # Create train-test split
-        X_train, X_test, y_train, y_test = train_test_split(
-            X, y, test_size=0.2, random_state=42
-        )
+        X_train = train_df[feature_cols + cat_cols]
+        y_train = train_df[target_col]
+        X_test = test_df[feature_cols + cat_cols]
+        y_test = test_df[target_col]
         
         return X_train, X_test, y_train, y_test, feature_cols, cat_cols
     
@@ -108,9 +109,9 @@ class WeatherModelTrainer:
             ('model', LinearRegression())
         ])
         
-        return {
-            'random_forest': rf_pipeline,
-            'gradient_boosting': gb_pipeline,
+        return { # only linear regression for now
+            # 'random_forest': rf_pipeline,
+            # 'gradient_boosting': gb_pipeline,
             'linear_regression': lr_pipeline
         }
     
