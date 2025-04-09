@@ -100,6 +100,8 @@ streamlit run app.py
 TODO:
 This project will be set up for automatic deployment to Google Cloud Platform App Engine using GitHub Actions.
 
+Using GCP Cloud Run from the Console.
+<!-- 
 1. **Set up Google Cloud SDK locally**
 
 ```bash
@@ -121,7 +123,7 @@ In your GitHub repository, go to Settings > Secrets and add:
 
 ```bash
 gcloud app deploy app.yaml
-```
+``` -->
 
 ## Testing
 
