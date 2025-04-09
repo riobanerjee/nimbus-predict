@@ -1,6 +1,7 @@
 import os
 import requests
 import json
+import numpy as np
 import pandas as pd
 from datetime import datetime, timedelta
 import time
@@ -98,9 +99,44 @@ class WeatherDataCollector:
             json.dump(data, f)
         print(f"Data saved to data/raw/{filename}")
 
+
+class AirPollutionGridCollector:
+    """Class to collect air pollution data for a grid around coordinates."""
+    
+    def __init__(self):
+        self.api_key = os.getenv("WEATHER_API_KEY")
+        if not self.api_key:
+            raise ValueError("API key not found. Set WEATHER_API_KEY in .env file")
+        self.base_url = "http://api.openweathermap.org/data/2.5/air_pollution"
+    
+    def get_current_pollution(self, lat, lon):
+        """Get current air pollution data for specific coordinates."""
+        params = {
+            "lat": lat,
+            "lon": lon,
+            "appid": self.api_key
+        }
+        
+        response = requests.get(f"{self.base_url}", params=params)
+        if response.status_code == 200:
+            return response.json()
+        else:
+            print(f"Error fetching air pollution data: {response.status_code}")
+            print(f"Response: {response.text}")
+            return None
+    
+    def save_data(self, data, filename):
+        """Save data to JSON file."""
+        os.makedirs("data/raw", exist_ok=True)
+        with open(f"data/raw/{filename}", "w") as f:
+            json.dump(data, f)
+        print(f"Data saved to data/raw/{filename}")
+    
+
 def collect_sample_data():
     """Collect sample data for multiple cities."""
     collector = WeatherDataCollector()
+    pollution_collector = AirPollutionGridCollector()
     
     # List of cities to collect data for
     cities = [
@@ -139,6 +175,12 @@ def collect_sample_data():
             if historical:
                 filename = f"{city.lower()}_{country.lower()}_historical_{datetime.now().strftime('%Y%m%d')}.json"
                 collector.save_data(historical, filename)
+        
+        # Collect air pollution data for a city
+        pollution = pollution_collector.get_current_pollution(lat, lon)
+        if pollution:
+            filename = f"{city.lower()}_{country.lower()}_pollution_{datetime.now().strftime('%Y%m%d')}.json"
+            pollution_collector.save_data(pollution, filename)
 
                 
         # Respect API rate limits

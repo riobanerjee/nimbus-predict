@@ -39,6 +39,8 @@ class WeatherDataProcessor:
                 df = self._process_forecast(file_path, city, country)
             elif "historical" in data_type:
                 df = self._process_historical(file_path, city, country)
+            elif "pollution" in data_type:
+                df = self._process_pollution(file_path, city, country)
             else:
                 continue
                 
@@ -148,6 +150,31 @@ class WeatherDataProcessor:
         # Create DataFrame
         return pd.DataFrame(rows)
     
+    def _process_pollution(self, file_path, city, country):
+        """Process air pollution data."""
+        with open(file_path, 'r') as f:
+            data_old = json.load(f)
+        
+        if not data_old:
+            return None
+        data = data_old['list'][0]
+        
+        row = {
+            'city': city,
+            'country': country,
+            'data_type': 'pollution',
+            'timestamp': pd.to_datetime(data['dt'], unit='s'),
+            'aqi': data['main']['aqi'],
+            'pm10': data['components'].get('pm10', 0),
+            'pm2_5': data['components'].get('pm2_5', 0),
+            'no2': data['components'].get('no2', 0),
+            'o3': data['components'].get('o3', 0),
+            'co': data['components'].get('co', 0),
+        }
+
+        return pd.DataFrame([row])
+        
+    
     def feature_engineering(self, df):
         """Create additional features for ML model."""
         # Convert timestamp to Spark datetime
@@ -160,8 +187,8 @@ class WeatherDataProcessor:
         df = df.withColumn("year", year("date"))
         
         # Calculate dew point (approximation)
-        df = df.withColumn("dew_point", 
-                          col("temp") - ((100 - col("humidity")) / 5))
+        # df = df.withColumn("dew_point", 
+        #                   col("temp") - ((100 - col("humidity")) / 5))
         
         # Weather category encoding (one-hot encoding would be done during ML prep)
         

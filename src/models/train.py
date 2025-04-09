@@ -109,9 +109,9 @@ class WeatherModelTrainer:
             ('model', LinearRegression())
         ])
         
-        return { # only linear regression for now
-            # 'random_forest': rf_pipeline,
-            # 'gradient_boosting': gb_pipeline,
+        return {
+            'random_forest': rf_pipeline,
+            'gradient_boosting': gb_pipeline,
             'linear_regression': lr_pipeline
         }
     
