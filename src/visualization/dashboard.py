@@ -74,6 +74,7 @@ class WeatherDashboard:
         """Get current weather data for selected location."""
         with st.spinner("Fetching current weather data..."):
             current_weather_data = self.collector.get_current_weather(city, country)
+            forecast_weather_data = self.collector.get_forecast(city, country)
             
         if current_weather_data is None:
             st.error(f"Failed to get weather data for {city}, {country}")
@@ -93,7 +94,7 @@ class WeatherDashboard:
             'lon': current_weather_data['coord']['lon']
         }
         
-        return weather, current_weather_data
+        return weather, current_weather_data, forecast_weather_data
     
     def display_current_weather(self, weather, raw_data):
         """Display current weather information."""
@@ -145,14 +146,20 @@ class WeatherDashboard:
             
         return prediction
     
-    def display_prediction(self, prediction):
+    def display_prediction(self, prediction, forecast):
         """Display weather prediction results."""
         st.header("Weather Forecast")
+
+        n_days = len(prediction['dates'])
+        forecast_temps = []
+        for i in range(n_days):
+            forecast_temps.append(forecast['list'][i]['main']['temp'])
         
         # Create prediction dataframe
         df = pd.DataFrame({
             'Date': prediction['dates'],
-            'Temperature': prediction['temperatures']
+            'Temperature': prediction['temperatures'],
+            'Forecast OWM': forecast_temps
         })
         
         # Display prediction as a table
@@ -163,7 +170,7 @@ class WeatherDashboard:
         fig = px.line(
             df, 
             x='Date', 
-            y='Temperature',
+            y=['Temperature', 'Forecast OWM'],
             markers=True,
             title=f"Temperature Forecast for {prediction['city']}, {prediction['country']}"
         )
@@ -192,7 +199,7 @@ class WeatherDashboard:
         if st.sidebar.button("Get Weather Forecast"):
             try:
                 # Get current weather
-                weather, raw_data = self.get_weather_data(city, country)
+                weather, raw_data, forecast_data = self.get_weather_data(city, country)
                 
                 # Display current weather
                 self.display_current_weather(weather, raw_data)
@@ -201,7 +208,7 @@ class WeatherDashboard:
                 prediction = self.make_prediction(city, country, weather)
                 
                 # Display prediction
-                self.display_prediction(prediction)
+                self.display_prediction(prediction, forecast_data)
                 
             except Exception as e:
                 st.error(f"An error occurred: {str(e)}")

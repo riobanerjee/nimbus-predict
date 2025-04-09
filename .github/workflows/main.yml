@@ -27,33 +27,36 @@ jobs:
     - name: Run tests
       run: |
         pytest --cov=src tests/
+      env:
+        WEATHER_API_KEY: ${{ secrets.WEATHER_API_KEY }}
     
-  deploy:
-    needs: test
-    runs-on: ubuntu-latest
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+  # deploy:
+  #   needs: test
+  #   runs-on: ubuntu-latest
+    # if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     
-    steps:
-    - uses: actions/checkout@v2
+  #   steps:
+  #   - uses: actions/checkout@v2
     
-    - name: Set up Python
-      uses: actions/setup-python@v2
-      with:
-        python-version: '3.9'
+  #   - name: Set up Python
+  #     uses: actions/setup-python@v2
+  #     with:
+  #       python-version: '3.9'
     
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install -r requirements.txt
+  #   - name: Install dependencies
+  #     run: |
+  #       python -m pip install --upgrade pip
+  #       pip install -r requirements.txt
     
-    - name: Set up Google Cloud SDK
-      uses: google-github-actions/setup-gcloud@v0
-      with:
-        service_account_key: ${{ secrets.GCP_SA_KEY }}
-        project_id: ${{ secrets.GCP_PROJECT_ID }}
-        weather_api_key: ${{ secrets.WEATHER_API_KEY }}
-        export_default_credentials: true
+  #   - name: Set up Google Cloud SDK
+  #     uses: google-github-actions/setup-gcloud@v0
+  #     with:
+  #       service_account_key: ${{ secrets.GCP_SA_KEY }}
+  #       project_id: ${{ secrets.GCP_PROJECT_ID }}
+  #       export_default_credentials: true
     
-    - name: Deploy to App Engine
-      run: |
-        gcloud app deploy app.yaml --quiet
+  #   - name: Deploy to App Engine
+  #     run: |
+  #       gcloud app deploy app.yaml --quiet
+  #   env:
+  #     WEATHER_API_KEY: ${{ secrets.WEATHER_API_KEY }}

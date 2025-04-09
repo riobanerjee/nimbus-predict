@@ -75,8 +75,6 @@ class WeatherDataProcessor:
             'clouds': data['clouds']['all'],
             'weather_main': data['weather'][0]['main'],
             'weather_description': data['weather'][0]['description'],
-            'lat': data['coord']['lat'],
-            'lon': data['coord']['lon']
         }
         
         # Create DataFrame
@@ -108,8 +106,6 @@ class WeatherDataProcessor:
                 'clouds': forecast['clouds']['all'],
                 'weather_main': forecast['weather'][0]['main'],
                 'weather_description': forecast['weather'][0]['description'],
-                'lat': data['city']['coord']['lat'],
-                'lon': data['city']['coord']['lon']
             }
             rows.append(row)
         
@@ -125,26 +121,27 @@ class WeatherDataProcessor:
             return None
             
         rows = []
-        for data in data_list:
-            if 'current' not in data:
+        for data_elem in data_list:
+            if 'list' not in data_elem:
                 continue
-                
+            
+            data = data_elem['list'][0]
             row = {
                 'city': city,
                 'country': country,
                 'data_type': 'historical',
-                'timestamp': pd.to_datetime(data['current']['dt'], unit='s'),
-                'temp': data['current']['temp'],
-                'feels_like': data['current']['feels_like'],
-                'pressure': data['current']['pressure'],
-                'humidity': data['current']['humidity'],
-                'wind_speed': data['current']['wind_speed'],
-                'wind_deg': data['current'].get('wind_deg', 0),
-                'clouds': data['current']['clouds'],
-                'weather_main': data['current']['weather'][0]['main'],
-                'weather_description': data['current']['weather'][0]['description'],
-                'lat': data['lat'],
-                'lon': data['lon']
+                'timestamp': pd.to_datetime(data['dt'], unit='s'),
+                'temp': data['main']['temp'],
+                'feels_like': data['main']['feels_like'],
+                'temp_min': data['main']['temp_min'],
+                'temp_max': data['main']['temp_max'],
+                'pressure': data['main']['pressure'],
+                'humidity': data['main']['humidity'],
+                'wind_speed': data['wind']['speed'],
+                'wind_deg': data['wind'].get('deg', 0),
+                'clouds': data['clouds']['all'],
+                'weather_main': data['weather'][0]['main'],
+                'weather_description': data['weather'][0]['description'],
             }
             rows.append(row)
         
