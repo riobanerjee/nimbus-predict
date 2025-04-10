@@ -133,16 +133,17 @@ class WeatherDashboard:
         
         # Current temperature
         col1.metric(
-            "Temperature", 
-            f"{weather['temp']:.1f}°C", 
-            f"Feels like: {weather['feels_like']:.1f}°C"
+            label = "Temperature",
+            value = f"{weather['temp']:.1f}°C",
+            delta = f"{weather['temp'] - weather['feels_like']:.1f}°C",
         )
         
         # Weather condition
         col2.metric(
             "Condition", 
             f"{weather['weather_main']}", 
-            f"{weather['weather_description']}"
+            f"{weather['weather_description']}",
+            delta_color="off"
         )
         
         # Humidity
@@ -186,11 +187,11 @@ class WeatherDashboard:
             fill=True,
             fill_color=color,
             fill_opacity=0.6,
-            popup=f"""
+            tooltip=folium.Tooltip(f"""
             <b>AQI:</b> {aqi} - {description}<br>
             <b>PM10:</b> {pollution['pm10']:.1f} μg/m³<br>
             <b>CO:</b> {pollution['co']:.1f} μg/m³<br>
-            """
+            """, sticky=True)
         ).add_to(m)
         
         # Add a regular marker for the location
@@ -198,10 +199,9 @@ class WeatherDashboard:
         folium.Marker(
             [lat, lon],
             popup=location_name,
-            tooltip=location_name,
+            tooltip=folium.Tooltip(location_name),
             icon=folium.Icon(color="blue", icon="info-sign")
         ).add_to(m)
-        
         # Add colormap legend for AQI
         colormap = cm.LinearColormap(
             ['green', 'lightgreen', 'yellow', 'orange', 'red'],
@@ -298,19 +298,19 @@ class WeatherDashboard:
 
         
         # Select pollutant to display
-        pollutant_options = {
-            'Air Quality Index': 'aqi',
-            # 'PM10': 'pm10',
-            'Carbon Monoxide (CO)': 'co',
-        }
+        # pollutant_options = {
+        #     'Air Quality Index': 'aqi',
+        #     'PM10': 'pm10',
+        #     'Carbon Monoxide (CO)': 'co',
+        # }
         
-        selected_pollutant_name = st.sidebar.selectbox(
-            "Select Pollutant to Display:",
-            list(pollutant_options.keys()),
-            index=0
-        )
+        # selected_pollutant_name = st.sidebar.selectbox(
+        #     "Select Pollutant to Display:",
+        #     list(pollutant_options.keys()),
+        #     index=0
+        # )
         
-        selected_pollutant = pollutant_options[selected_pollutant_name]
+        # selected_pollutant = pollutant_options[selected_pollutant_name]
         
         # Submit button
         if st.sidebar.button("Get Weather Forecast"):
@@ -323,6 +323,7 @@ class WeatherDashboard:
                 location_name = f"{raw_data['name']}, {raw_data['sys']['country']}"
                 
                 weather['location_name'] = location_name
+                # pollution['selected_pollutant'] = selected_pollutant
                 # Display current weather
                 self.display_current_weather(weather, pollution)
                 
@@ -340,8 +341,8 @@ class WeatherDashboard:
         st.sidebar.subheader("About")
         st.sidebar.info(
             "This application fetches current weather data and "
-            "predicts future temperatures using a machine learning model."
-            "It also visualizes air pollution data on a map using grid interpolation."
+            "predicts future temperatures using a machine learning model. "
+            "It also visualizes air pollution data on a map using grid interpolation. "
             "The data is collected from OpenWeatherMap API."
         )
 

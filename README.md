@@ -1,7 +1,6 @@
 # Weather Forecaster 🌤️
 
-A machine learning-powered weather forecasting application that fetches real-time weather data, processes it using PySpark, trains a prediction model, and displays the results on an interactive dashboard.
-It also fetches Air Pollution data and displays it on a map.
+A machine learning-powered weather forecasting application that fetches real-time weather data, processes it using PySpark, trains a prediction model, and displays the results on an interactive dashboard. It also fetches Air Pollution data and displays it on a map.
 
 ## Hosted Application
 The Weather Forecaster application is hosted on GCP Cloud Run.
