@@ -342,7 +342,7 @@ class WeatherDashboard:
         st.sidebar.info(
             "This application fetches current weather data and "
             "predicts future temperatures using a machine learning model. "
-            "It also visualizes air pollution data on a map using grid interpolation. "
+            "It also visualizes air pollution data on a map. "
             "The data is collected from OpenWeatherMap API."
         )
 
