@@ -19,7 +19,8 @@ This project implements a complete data pipeline and web application for weather
 2. **Data Processing**: Clean and transform data using PySpark
 3. **Machine Learning**: Train models to predict future weather
 4. **Visualization**: Display results on an interactive Streamlit dashboard
-5. **Deployment**: Host the application on Google Cloud Platform
+5. **Testing**: Use Github Actions for CI/CD
+6. **Deployment**: Host the application on Google Cloud Platform
 
 ## Setup Instructions
 
