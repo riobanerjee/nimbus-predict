@@ -1,12 +1,16 @@
 # Weather Forecaster 🌤️
 
 A machine learning-powered weather forecasting application that fetches real-time weather data, processes it using PySpark, trains a prediction model, and displays the results on an interactive dashboard.
+It also fetches Air Pollution data and displays it on a map.
 
 ## Hosted Application
+The Weather Forecaster application is hosted on GCP Cloud Run.
+Access it here: [GCP Streamlit App](https://nimbus-predict-645776801901.europe-west2.run.app)
+<!-- 
 
 The Weather Forecaster application is hosted on Streamlit Cloud. You can access it at:
 
-[https://nimbus-predict.streamlit.app](https://nimbus-predict.streamlit.app)
+[https://nimbus-predict.streamlit.app](https://nimbus-predict.streamlit.app) -->
 
 ## Project Overview
 
@@ -32,8 +36,8 @@ This project implements a complete data pipeline and web application for weather
 1. **Clone the repository**
 
 ```bash
-git clone https://github.com/yourusername/weather-forecaster.git
-cd weather-forecaster
+git clone https://github.com/riobanerjee/nimbus-predict.git
+cd nimbus-predict
 ```
 
 2. **Create and activate a virtual environment**
@@ -97,8 +101,7 @@ streamlit run app.py
 
 ## Deployment to GCP
 
-TODO:
-This project will be set up for automatic deployment to Google Cloud Platform App Engine using GitHub Actions.
+This project is set up for automatic deployment to Google Cloud Platform App Engine using GitHub Actions.
 
 Using GCP Cloud Run from the Console.
 <!-- 
